@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+@theme {
+  /* Paleta: tinta de serigrafía sobre placa perforada */
+  --color-ink: #10141C;
+  --color-ink-soft: #1C2331;
+  --color-board: #F2F4F1;
+  --color-trace: #6B7684;
+
+  /* Bandas de resistencia: código de colores real */
+  --color-band-red: #C1272D;
+  --color-band-violet: #5B3E96;
+  --color-band-gold: #C9A227;
+  --color-band-green: #2E7D5B;
+
+  --font-display: "Archivo", ui-sans-serif, sans-serif;
+  --font-body: "IBM Plex Sans", ui-sans-serif, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+body {
+  background-color: var(--color-board);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}

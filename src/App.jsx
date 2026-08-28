@@ -1,7 +1,27 @@
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Inicio from "./pages/Inicio";
+import Nosotros from "./pages/Nosotros";
+import Contacto from "./pages/Contacto";
+import Catalogo from "./pages/Catalogo";
+import DetalleProducto from "./pages/DetalleProducto";
+import Registro from "./pages/Registro";
+import Login from "./pages/Login";
+import Perfil from "./pages/Perfil";
+
 export default function App() {
   return (
-    <h1 className="text-4xl font-bold text-blue-600">
-      Nexus funciona
-    </h1>
-  )
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Inicio />} />
+        <Route path="/nosotros" element={<Nosotros />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/catalogo" element={<Catalogo />} />
+        <Route path="/producto/:id" element={<DetalleProducto />} />
+        <Route path="/registro" element={<Registro />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/perfil" element={<Perfil />} />
+      </Route>
+    </Routes>
+  );
 }
