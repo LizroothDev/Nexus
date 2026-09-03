@@ -37,9 +37,9 @@ export default function Inicio() {
             <h1 className="mt-4 font-display text-5xl leading-[0.95] font-extrabold tracking-tight sm:text-6xl">
               El componente
               <br />
-              que aquí
+              que ocupas
               <br />
-              <span className="text-band-red">nadie tiene.</span>
+              <span className="text-band-red">en un solo lugar.</span>
             </h1>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-ink/70">
               Microcontroladores, sensores y hardware que normalmente esperarías

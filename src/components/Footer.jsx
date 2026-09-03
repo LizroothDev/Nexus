@@ -31,7 +31,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-board/10 px-5 py-4 text-center font-mono text-xs text-board/40">
-        Proyecto escolar — Negocios Electrónicos I · ITA
+        Nexus dejanos conectar tus ideas 
       </div>
     </footer>
   );
