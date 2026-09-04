@@ -55,11 +55,12 @@ export default function Inicio() {
                 Ver productos
               </Link>
               <Link
-                to="/registro"
+                 to="/registro?tipo=empresa"
                 className="rounded-sm border border-ink/25 px-6 py-3 font-mono text-xs font-medium tracking-wider uppercase transition-colors hover:border-ink"
-              >
-                Abrir cuenta mayoreo
+        >
+               Abrir cuenta mayoreo
               </Link>
+
             </div>
           </div>
 
@@ -212,10 +213,8 @@ export default function Inicio() {
             </p>
           </div>
           <Link
-            to="/registro"
-            className="shrink-0 rounded-sm bg-board px-6 py-3 font-mono text-xs font-medium tracking-wider text-ink uppercase transition-opacity hover:opacity-90"
-          >
-            Crear cuenta
+           to="/registro?tipo=empresa" className="...">
+          Crear cuenta
           </Link>
         </div>
       </section>
