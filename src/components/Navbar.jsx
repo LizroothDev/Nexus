@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import BandaResistencia from "./BandaResistencia";
+import { leerSesion } from "../store/sesion";
 
 const enlaces = [
   { to: "/", label: "Inicio" },
@@ -11,11 +12,23 @@ const enlaces = [
 
 export default function Navbar() {
   const [abierto, setAbierto] = useState(false);
+  const [usuario, setUsuario] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    setUsuario(leerSesion());
+  }, [location]);
 
   const estiloEnlace = ({ isActive }) =>
     `text-sm font-medium tracking-wide transition-colors ${
       isActive ? "text-ink" : "text-trace hover:text-ink"
     }`;
+
+  const estiloBoton =
+    "rounded-sm bg-ink px-4 py-2 font-mono text-xs font-medium tracking-wider text-board uppercase transition-colors hover:bg-ink-soft";
+
+  const destino = usuario ? "/perfil" : "/login";
+  const textoBoton = usuario ? "Mi cuenta" : "Iniciar sesión";
 
   return (
     <header className="sticky top-0 z-50 bg-board/95 backdrop-blur">
@@ -31,18 +44,15 @@ export default function Navbar() {
               {e.label}
             </NavLink>
           ))}
-          <Link
-            to="/login"
-            className="rounded-sm bg-ink px-4 py-2 font-mono text-xs font-medium tracking-wider text-board uppercase transition-colors hover:bg-ink-soft"
-          >
-            Iniciar sesión
+          <Link to={destino} className={estiloBoton}>
+            {textoBoton}
           </Link>
         </nav>
 
         {/* Botón móvil */}
         <button
           onClick={() => setAbierto(!abierto)}
-          className="text-sm font-mono uppercase tracking-wider md:hidden"
+          className="font-mono text-sm uppercase tracking-wider md:hidden"
           aria-expanded={abierto}
         >
           {abierto ? "Cerrar" : "Menú"}
@@ -63,11 +73,11 @@ export default function Navbar() {
             </NavLink>
           ))}
           <Link
-            to="/login"
+            to={destino}
             onClick={() => setAbierto(false)}
-            className="mt-2 rounded-sm bg-ink px-4 py-2 text-center font-mono text-xs uppercase tracking-wider text-board"
+            className={`${estiloBoton} mt-2 text-center`}
           >
-            Iniciar sesión
+            {textoBoton}
           </Link>
         </nav>
       )}
