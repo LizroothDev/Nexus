@@ -158,6 +158,21 @@ export default function Inicio() {
         </div>
       </section>
 
+      {/* Aviso de campaña */}
+      <section className="bg-band-gold">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-5">
+          <p className="font-display text-lg font-bold text-ink">
+            Kit de Inicio en Robótica · 10 componentes por $549
+         </p>
+          <Link
+            to="/campana"
+            className="rounded-sm bg-ink px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-board hover:bg-ink-soft"
+          >
+            Ver campaña
+          </Link>
+        </div>
+      </section>
+
       {/* PROPUESTA DE VALOR */}
       <section className="mx-auto max-w-6xl px-5 py-20">
         <div className="grid gap-10 sm:grid-cols-3">

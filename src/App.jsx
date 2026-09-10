@@ -8,10 +8,15 @@ import DetalleProducto from "./pages/DetalleProducto";
 import Registro from "./pages/Registro";
 import Login from "./pages/Login";
 import Perfil from "./pages/Perfil";
+import Campana from "./pages/Campana";
 
 export default function App() {
   return (
     <Routes>
+      {/* Landing de campaña: va fuera del Layout, sin navbar ni footer */}
+      <Route path="/campana" element={<Campana />} />
+
+      {/* Sitio principal: todas estas heredan navbar y footer */}
       <Route element={<Layout />}>
         <Route path="/" element={<Inicio />} />
         <Route path="/nosotros" element={<Nosotros />} />
