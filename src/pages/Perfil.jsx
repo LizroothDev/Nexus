@@ -115,6 +115,19 @@ export default function Perfil() {
         </div>
       </div>
 
+      <div className="mt-12 rounded-sm border border-band-violet/30 bg-band-violet/5 p-5">
+          <p className={label}>Acceso administrativo</p>
+          <p className="mt-2 text-sm text-ink/70">
+            Panel de control del negocio con métricas y gestión de catálogo.
+          </p>
+          <Link
+            to="/admin"
+            className="mt-4 inline-block rounded-sm bg-band-violet px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-board hover:opacity-90"
+          >
+            Abrir panel admin
+          </Link>
+        </div>
+
       <button
         onClick={salir}
         className="mt-12 rounded-sm border border-band-red px-6 py-3 font-mono text-xs uppercase tracking-wider text-band-red transition-colors hover:bg-band-red hover:text-board"

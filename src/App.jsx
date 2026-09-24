@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Perfil from "./pages/Perfil";
 import Campana from "./pages/Campana";
 import Carrito from "./pages/Carrito";
+import Dashboard from "./pages/admin/Dashboard";
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/carrito" element={<Carrito />} />
+        <Route path="/admin" element={<Dashboard />} />
       </Route>
     </Routes>
   );
