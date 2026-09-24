@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import BandaResistencia from "./BandaResistencia";
 import { leerSesion } from "../store/sesion";
+import { leerCarrito, contarPiezas } from "../store/carrito";
 
 const enlaces = [
   { to: "/", label: "Inicio" },
@@ -13,10 +14,18 @@ const enlaces = [
 export default function Navbar() {
   const [abierto, setAbierto] = useState(false);
   const [usuario, setUsuario] = useState(null);
+  const [piezas, setPiezas] = useState(0);
   const location = useLocation();
 
   useEffect(() => {
     setUsuario(leerSesion());
+  }, [location]);
+
+  useEffect(() => {
+    const actualizar = () => setPiezas(contarPiezas(leerCarrito()));
+    actualizar();
+    window.addEventListener("carrito-cambio", actualizar);
+    return () => window.removeEventListener("carrito-cambio", actualizar);
   }, [location]);
 
   const estiloEnlace = ({ isActive }) =>
@@ -29,6 +38,20 @@ export default function Navbar() {
 
   const destino = usuario ? "/perfil" : "/login";
   const textoBoton = usuario ? "Mi cuenta" : "Iniciar sesión";
+
+  const enlaceCarrito = (
+    <Link
+      to="/carrito"
+      className="relative font-mono text-xs uppercase tracking-wider text-trace transition-colors hover:text-ink"
+    >
+      Carrito
+      {piezas > 0 && (
+        <span className="absolute -right-4 -top-2 rounded-full bg-band-red px-1.5 py-0.5 text-[10px] font-semibold tabular-nums text-board">
+          {piezas}
+        </span>
+      )}
+    </Link>
+  );
 
   return (
     <header className="sticky top-0 z-50 bg-board/95 backdrop-blur">
@@ -44,6 +67,7 @@ export default function Navbar() {
               {e.label}
             </NavLink>
           ))}
+          {enlaceCarrito}
           <Link to={destino} className={estiloBoton}>
             {textoBoton}
           </Link>
@@ -72,6 +96,15 @@ export default function Navbar() {
               <span className="block py-2">{e.label}</span>
             </NavLink>
           ))}
+
+          <Link
+            to="/carrito"
+            onClick={() => setAbierto(false)}
+            className="py-2 font-mono text-sm uppercase tracking-wider text-trace hover:text-ink"
+          >
+            Carrito {piezas > 0 && `(${piezas})`}
+          </Link>
+
           <Link
             to={destino}
             onClick={() => setAbierto(false)}

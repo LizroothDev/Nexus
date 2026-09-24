@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { productos } from "../data/productos";
 import ImagenProducto from "../components/ImagenProducto";
 import Toast from "../components/Toast";
+import { agregarAlCarrito } from "../store/carrito";
 
 const label = "font-mono text-xs uppercase tracking-widest text-trace";
 
@@ -11,8 +12,9 @@ export default function DetalleProducto() {
   const producto = productos.find((p) => p.id === id);
 
   const [modo, setModo] = useState("menudeo");
+  const [cantidad, setCantidad] = useState(1);
   const [toast, setToast] = useState(false);
-
+  
   if (!producto) {
     return (
       <section className="mx-auto max-w-6xl px-5 py-32 text-center">
@@ -69,7 +71,10 @@ export default function DetalleProducto() {
           <div className="mt-8 grid gap-2 sm:grid-cols-2">
             <button
               type="button"
-              onClick={() => setModo("menudeo")}
+              onClick={() => {
+                setModo("menudeo");
+                setCantidad(producto.minMayoreo);
+              }}S
               className={`rounded-sm border p-4 text-left transition-colors ${
                 !esMayoreo
                   ? "border-ink bg-ink text-board"
@@ -118,12 +123,43 @@ export default function DetalleProducto() {
             {producto.stock} en existencia
           </p>
 
-          <button
-            onClick={() => setToast(true)}
-            className="mt-6 w-full rounded-sm bg-ink px-6 py-3.5 font-mono text-xs uppercase tracking-wider text-board transition-colors hover:bg-ink-soft sm:w-auto"
-          >
-            Agregar al carrito
-          </button>
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setCantidad(Math.max(1, cantidad - 1))}
+              className="h-11 w-11 rounded-sm border border-ink/20 font-mono hover:border-ink"
+              aria-label="Quitar una pieza"
+        >
+         −
+        </button>
+        <input
+          type="number"
+          min="1"
+          value={cantidad}
+          onChange={(e) => setCantidad(Math.max(1, Number(e.target.value) || 1))}
+          className="h-11 w-20 rounded-sm border border-ink/20 text-center font-mono text-sm outline-none focus:border-ink"
+          aria-label="Cantidad"
+        />
+        <button
+          onClick={() => setCantidad(cantidad + 1)}
+          className="h-11 w-11 rounded-sm border border-ink/20 font-mono hover:border-ink"
+          aria-label="Agregar una pieza"
+        >
+          +
+        </button>
+      </div>
+
+      <button
+        onClick={() => {
+          agregarAlCarrito(producto, cantidad);
+          setToast(true);
+        }}
+        className="h-11 rounded-sm bg-ink px-6 font-mono text-xs uppercase tracking-wider text-board transition-colors hover:bg-ink-soft"
+      >
+        Agregar al carrito
+      </button>
+    </div>
+
         </div>
       </div>
 
@@ -170,7 +206,7 @@ export default function DetalleProducto() {
       )}
 
       <Toast
-        mensaje="Función disponible en Bloque 2"
+        mensaje={`${cantidad} pz agregadas al carrito`}
         visible={toast}
         onCerrar={() => setToast(false)}
       />

@@ -9,6 +9,7 @@ import Registro from "./pages/Registro";
 import Login from "./pages/Login";
 import Perfil from "./pages/Perfil";
 import Campana from "./pages/Campana";
+import Carrito from "./pages/Carrito";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/registro" element={<Registro />} />
         <Route path="/login" element={<Login />} />
         <Route path="/perfil" element={<Perfil />} />
+        <Route path="/carrito" element={<Carrito />} />
       </Route>
     </Routes>
   );
