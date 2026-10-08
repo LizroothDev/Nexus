@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { productos } from "../../data/productos";
+import { leerProductos } from "../../store/catalogo";
 
 const label = "font-mono text-xs uppercase tracking-widest text-trace";
 const pesos = (n) =>
@@ -25,6 +24,8 @@ const ventasMes = [
 ];
 
 export default function Dashboard() {
+  const productos = leerProductos();
+
   const sinStock = productos.filter((p) => p.stock < 60);
   const valorInventario = productos.reduce((s, p) => s + p.precio * p.stock, 0);
   const pendientes = pedidosRecientes.filter((p) => p.estado === "Pendiente").length;
@@ -38,24 +39,14 @@ export default function Dashboard() {
   ];
 
   return (
-    <section className="mx-auto max-w-6xl px-5 pt-16 pb-24">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className={label}>Panel administrativo</p>
-          <h1 className="mt-2 font-display text-4xl font-extrabold tracking-tight">
-            Resumen general
-          </h1>
-        </div>
-        <Link
-          to="/admin/productos"
-          className="rounded-sm bg-ink px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-board hover:bg-ink-soft"
-        >
-          Gestionar productos
-        </Link>
-      </div>
+    <section>
+      <p className={label}>Resumen</p>
+      <h1 className="mt-2 font-display text-3xl font-extrabold tracking-tight">
+        Panel de control
+      </h1>
 
       {/* Métricas */}
-      <div className="mt-10 grid gap-px bg-ink/10 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-8 grid gap-px bg-ink/10 sm:grid-cols-2 lg:grid-cols-4">
         {metricas.map((m) => (
           <div key={m.titulo} className="bg-white p-5">
             <p className={label}>{m.titulo}</p>
@@ -121,19 +112,25 @@ export default function Dashboard() {
 
           {/* Stock bajo */}
           <p className={`${label} mt-8`}>Requieren resurtido</p>
-          <ul className="mt-4 rounded-sm border border-ink/15 bg-white">
-            {sinStock.map((p) => (
-              <li
-                key={p.id}
-                className="flex items-center justify-between gap-3 border-b border-ink/5 px-4 py-3 last:border-0"
-              >
-                <span className="text-sm">{p.nombre}</span>
-                <span className="font-mono text-xs tabular-nums text-band-red">
-                  {p.stock} pz
-                </span>
-              </li>
-            ))}
-          </ul>
+          {sinStock.length === 0 ? (
+            <p className="mt-4 rounded-sm border border-ink/15 bg-white p-4 text-sm text-trace">
+              Todas las claves tienen existencia suficiente.
+            </p>
+          ) : (
+            <ul className="mt-4 rounded-sm border border-ink/15 bg-white">
+              {sinStock.map((p) => (
+                <li
+                  key={p.id}
+                  className="flex items-center justify-between gap-3 border-b border-ink/5 px-4 py-3 last:border-0"
+                >
+                  <span className="text-sm">{p.nombre}</span>
+                  <span className="font-mono text-xs tabular-nums text-band-red">
+                    {p.stock} pz
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </section>

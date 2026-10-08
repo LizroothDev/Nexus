@@ -1,15 +1,23 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { productos, categorias } from "../data/productos";
+import { categorias } from "../data/productos";
+import { leerProductos } from "../store/catalogo";
 import ImagenProducto from "../components/ImagenProducto";
 
 const label = "font-mono text-xs uppercase tracking-widest text-trace";
 const TOPE = 300;
 
 export default function Catalogo() {
+  const [productos, setProductos] = useState(leerProductos);
   const [busqueda, setBusqueda] = useState("");
   const [categoria, setCategoria] = useState("Todas");
   const [precioMax, setPrecioMax] = useState(TOPE);
+
+  useEffect(() => {
+    const actualizar = () => setProductos(leerProductos());
+    window.addEventListener("catalogo-cambio", actualizar);
+    return () => window.removeEventListener("catalogo-cambio", actualizar);
+  }, []);
 
   const filtrados = useMemo(() => {
     const texto = busqueda.trim().toLowerCase();
@@ -21,7 +29,7 @@ export default function Catalogo() {
       const enPrecio = p.precio <= precioMax;
       return coincide && enCategoria && enPrecio;
     });
-  }, [busqueda, categoria, precioMax]);
+  }, [productos, busqueda, categoria, precioMax]);
 
   function limpiar() {
     setBusqueda("");
@@ -77,8 +85,7 @@ export default function Catalogo() {
 
           <div>
             <label htmlFor="precio" className={label}>
-              Precio máximo:{" "}
-              <span className="text-ink">${precioMax}</span>
+              Precio máximo: <span className="text-ink">${precioMax}</span>
             </label>
             <input
               id="precio"
@@ -109,9 +116,7 @@ export default function Catalogo() {
       {/* Resultados */}
       {filtrados.length === 0 ? (
         <div className="mt-10 rounded-sm border border-dashed border-ink/25 bg-white p-12 text-center">
-          <p className="font-display text-lg font-bold">
-            Ninguna clave coincide
-          </p>
+          <p className="font-display text-lg font-bold">Ninguna clave coincide</p>
           <p className="mt-1 text-sm text-trace">
             Prueba con otro término o amplía el rango de precio.
           </p>
