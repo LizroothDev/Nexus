@@ -7,6 +7,11 @@ import ImagenProducto from "../components/ImagenProducto";
 const label = "font-mono text-xs uppercase tracking-widest text-trace";
 const TOPE = 300;
 
+const colorEtiqueta = {
+  Nuevo: "bg-band-violet text-board",
+  Oferta: "bg-band-red text-board",
+};
+
 export default function Catalogo() {
   const [productos, setProductos] = useState(leerProductos);
   const [busqueda, setBusqueda] = useState("");
@@ -128,7 +133,16 @@ export default function Catalogo() {
               key={p.id}
               className="flex flex-col overflow-hidden rounded-sm border border-ink/15 bg-white"
             >
-              <ImagenProducto categoria={p.categoria} className="aspect-[10/7]" />
+              <div className="relative">
+                <ImagenProducto categoria={p.categoria} className="aspect-[10/7]" />
+                {p.etiqueta && (
+                  <span
+                    className={`absolute left-3 top-3 rounded-sm px-2 py-1 font-mono text-xs uppercase tracking-wider ${colorEtiqueta[p.etiqueta]}`}
+                  >
+                    {p.etiqueta}
+                  </span>
+                )}
+              </div>
 
               <div className="flex flex-1 flex-col p-5">
                 <p className="font-mono text-xs uppercase tracking-widest text-trace">

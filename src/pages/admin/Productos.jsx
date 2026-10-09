@@ -48,6 +48,7 @@ export default function Productos() {
       minMayoreo: p.minMayoreo,
       stock: p.stock,
       resumen: p.resumen,
+      etiqueta: p.etiqueta || "",
     });
     setEditando(p.id);
   }

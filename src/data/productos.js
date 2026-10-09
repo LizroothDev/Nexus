@@ -4,6 +4,7 @@ export const productos = [
   {
     id: "esp32-wroom",
     nombre: "ESP32-WROOM-32",
+    etiqueta: "Oferta",
     categoria: "Embebidos",
     precio: 189,
     precioMayoreo: 134,
@@ -24,6 +25,7 @@ export const productos = [
   {
     id: "rp2040-pico",
     nombre: "Raspberry Pi Pico",
+    etiqueta: "Nuevo",
     categoria: "Embebidos",
     precio: 145,
     precioMayoreo: 108,
@@ -84,6 +86,7 @@ export const productos = [
   {
     id: "hcsr04",
     nombre: "HC-SR04 Ultrasónico",
+    etiqueta: "Oferta",
     categoria: "Sensores",
     precio: 52,
     precioMayoreo: 38,
@@ -104,6 +107,7 @@ export const productos = [
   {
     id: "vl53l0x",
     nombre: "VL53L0X ToF",
+    etiqueta: "Nuevo",
     categoria: "Sensores",
     precio: 178,
     precioMayoreo: 139,
