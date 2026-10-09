@@ -13,6 +13,7 @@ import Perfil from "./pages/Perfil";
 import Campana from "./pages/Campana";
 import Dashboard from "./pages/admin/Dashboard";
 import ProductosAdmin from "./pages/admin/Productos";
+import Legal from "./pages/Legal";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
 
       {/* Sitio principal: todas heredan navbar y footer */}
       <Route element={<Layout />}>
+        <Route path="/legal" element={<Legal />} />
         <Route path="/" element={<Inicio />} />
         <Route path="/nosotros" element={<Nosotros />} />
         <Route path="/contacto" element={<Contacto />} />

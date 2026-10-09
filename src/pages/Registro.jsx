@@ -27,6 +27,7 @@ export default function Registro() {
   const tipoInicial = params.get("tipo") === "empresa" ? "empresa" : "maker";
 
   const [tipo, setTipo] = useState(tipoInicial);
+  const [acepto, setAcepto] = useState(false);
   const [datos, setDatos] = useState({
     nombre: "",
     correo: "",
@@ -46,6 +47,7 @@ export default function Registro() {
     guardarUsuario({
       ...datos,
       tipo,
+      acepto,
       nombre: datos.nombre || "Usuario de prueba",
       correo: datos.correo || "demo@nexus.mx",
     });
@@ -172,6 +174,34 @@ export default function Registro() {
             </div>
           </div>
         )}
+
+        <label className="flex items-start gap-3 text-sm leading-relaxed">
+          <input
+            type="checkbox"
+            checked={acepto}
+            onChange={(e) => setAcepto(e.target.checked)}
+            className="mt-1 h-4 w-4 shrink-0 accent-ink"
+          />
+          <span className="text-ink/75">
+            Acepto los{" "}
+            <Link
+              to="/legal?doc=terminos"
+              target="_blank"
+              className="font-semibold text-ink underline hover:text-band-red"
+            >
+              términos y condiciones
+            </Link>{" "}
+            y el{" "}
+            <Link
+              to="/legal?doc=privacidad"
+              target="_blank"
+              className="font-semibold text-ink underline hover:text-band-red"
+            >
+              aviso de privacidad
+            </Link>
+            .
+          </span>
+        </label>
 
         <button
           type="submit"
