@@ -4,6 +4,7 @@ import { productos } from "../data/productos";
 import ImagenProducto from "../components/ImagenProducto";
 import Toast from "../components/Toast";
 import { agregarAlCarrito } from "../store/carrito";
+import Resenas from "../components/Resenas";
 
 const label = "font-mono text-xs uppercase tracking-widest text-trace";
 
@@ -204,6 +205,8 @@ export default function DetalleProducto() {
           </div>
         </div>
       )}
+
+      <Resenas productoId={producto.id} />
 
       <Toast
         mensaje={`${cantidad} pz agregadas al carrito`}
