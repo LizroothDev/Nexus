@@ -7,6 +7,7 @@ import { leerCarrito, contarPiezas } from "../store/carrito";
 const enlaces = [
   { to: "/", label: "Inicio" },
   { to: "/catalogo", label: "Catálogo" },
+  { to: "/subastas", label: "Subastas" },
   { to: "/promociones", label: "Promos" },
   { to: "/publicar", label: "Vender" },
   { to: "/nosotros", label: "Nosotros" },
