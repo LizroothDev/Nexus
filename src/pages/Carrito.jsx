@@ -8,6 +8,8 @@ import {
   calcularTotales,
   precioUnitario,
 } from "../store/carrito";
+import { leerCuponActivo, quitarCupon } from "../store/cupon";
+import { calcularDescuento } from "../data/cupones";
 import ImagenProducto from "../components/ImagenProducto";
 import Toast from "../components/Toast";
 
@@ -17,13 +19,21 @@ const pesos = (n) =>
 
 export default function Carrito() {
   const [items, setItems] = useState([]);
+  const [cupon, setCupon] = useState(null);
+  const [acepto, setAcepto] = useState(false);
   const [toast, setToast] = useState(false);
 
   useEffect(() => {
     setItems(leerCarrito());
+    setCupon(leerCuponActivo());
   }, []);
 
-  const { subtotal, iva, total } = calcularTotales(items);
+  const { subtotal } = calcularTotales(items);
+  const descuento = calcularDescuento(cupon, subtotal);
+  const baseConDescuento = subtotal - descuento;
+  const ivaFinal = baseConDescuento * 0.16;
+  const totalFinal = baseConDescuento + ivaFinal;
+  const noAlcanza = cupon && subtotal < cupon.minimo;
 
   if (items.length === 0) {
     return (
@@ -150,24 +160,89 @@ export default function Carrito() {
               <dt className="text-trace">Subtotal</dt>
               <dd className="font-mono tabular-nums">{pesos(subtotal)}</dd>
             </div>
+
+            {cupon && !noAlcanza && (
+              <div className="flex justify-between text-sm text-band-green">
+                <dt className="font-mono text-xs">{cupon.codigo}</dt>
+                <dd className="font-mono tabular-nums">−{pesos(descuento)}</dd>
+              </div>
+            )}
+
             <div className="flex justify-between text-sm">
               <dt className="text-trace">IVA (16%)</dt>
-              <dd className="font-mono tabular-nums">{pesos(iva)}</dd>
+              <dd className="font-mono tabular-nums">{pesos(ivaFinal)}</dd>
             </div>
           </dl>
+
+          {noAlcanza && (
+            <p className="mt-3 rounded-sm bg-band-gold/10 px-3 py-2 font-mono text-xs text-band-gold">
+              {cupon.codigo} requiere compra mínima de ${cupon.minimo}. Te faltan{" "}
+              {pesos(cupon.minimo - subtotal)}.
+            </p>
+          )}
+
+          {!cupon && (
+            <Link
+              to="/promociones"
+              className="mt-3 block font-mono text-xs uppercase tracking-wider text-trace hover:text-ink"
+            >
+              + Aplicar un cupón
+            </Link>
+          )}
+
+          {cupon && (
+            <button
+              onClick={() => {
+                quitarCupon();
+                setCupon(null);
+              }}
+              className="mt-3 font-mono text-xs uppercase tracking-wider text-trace hover:text-band-red"
+            >
+              Quitar cupón
+            </button>
+          )}
 
           <div className="mt-4 flex items-baseline justify-between">
             <span className="font-mono text-xs uppercase tracking-widest text-trace">
               Total
             </span>
             <span className="font-display text-3xl font-extrabold tabular-nums">
-              {pesos(total)}
+              {pesos(totalFinal)}
             </span>
           </div>
 
+          {/* Aceptación de términos */}
+          <label className="mt-6 flex items-start gap-3 text-xs leading-relaxed">
+            <input
+              type="checkbox"
+              checked={acepto}
+              onChange={(e) => setAcepto(e.target.checked)}
+              className="mt-0.5 h-4 w-4 shrink-0 accent-ink"
+            />
+            <span className="text-ink/75">
+              Acepto los{" "}
+              <Link
+                to="/legal?doc=terminos"
+                target="_blank"
+                className="font-semibold text-ink underline hover:text-band-red"
+              >
+                términos y condiciones
+              </Link>{" "}
+              y el{" "}
+              <Link
+                to="/legal?doc=privacidad"
+                target="_blank"
+                className="font-semibold text-ink underline hover:text-band-red"
+              >
+                aviso de privacidad
+              </Link>
+              .
+            </span>
+          </label>
+
           <button
             onClick={() => setToast(true)}
-            className="mt-6 w-full rounded-sm bg-ink px-6 py-3.5 font-mono text-xs uppercase tracking-wider text-board hover:bg-ink-soft"
+            className="mt-5 w-full rounded-sm bg-ink px-6 py-3.5 font-mono text-xs uppercase tracking-wider text-board hover:bg-ink-soft"
           >
             Ir a checkout
           </button>

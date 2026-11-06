@@ -7,6 +7,7 @@ import { leerCarrito, contarPiezas } from "../store/carrito";
 const enlaces = [
   { to: "/", label: "Inicio" },
   { to: "/catalogo", label: "Catálogo" },
+  { to: "/promociones", label: "Promos" },
   { to: "/nosotros", label: "Nosotros" },
   { to: "/contacto", label: "Contacto" },
 ];
@@ -60,8 +61,7 @@ export default function Navbar() {
           NEXUS
         </Link>
 
-        {/* Escritorio */}
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-6 md:flex">
           {enlaces.map((e) => (
             <NavLink key={e.to} to={e.to} className={estiloEnlace}>
               {e.label}
@@ -73,7 +73,6 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        {/* Botón móvil */}
         <button
           onClick={() => setAbierto(!abierto)}
           className="font-mono text-sm uppercase tracking-wider md:hidden"
@@ -83,7 +82,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Menú móvil */}
       {abierto && (
         <nav className="flex flex-col gap-1 border-t border-trace/20 px-5 py-3 md:hidden">
           {enlaces.map((e) => (
