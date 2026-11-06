@@ -74,6 +74,8 @@ export default function Carrito() {
                 className="flex gap-4 rounded-sm border border-ink/15 bg-white p-4"
               >
                 <ImagenProducto
+                  imagen={item.imagen}
+                  nombre={item.nombre}
                   categoria={item.categoria}
                   className="hidden h-24 w-32 shrink-0 rounded-sm sm:block"
                 />

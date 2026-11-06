@@ -134,7 +134,12 @@ export default function Catalogo() {
               className="flex flex-col overflow-hidden rounded-sm border border-ink/15 bg-white"
             >
               <div className="relative">
-                <ImagenProducto categoria={p.categoria} className="aspect-[10/7]" />
+                <ImagenProducto
+                  imagen={p.imagen}
+                  nombre={p.nombre}
+                  categoria={p.categoria}
+                  className="aspect-[10/7]"
+                />
                 {p.etiqueta && (
                   <span
                     className={`absolute left-3 top-3 rounded-sm px-2 py-1 font-mono text-xs uppercase tracking-wider ${colorEtiqueta[p.etiqueta]}`}

@@ -23,6 +23,7 @@ export function agregarAlCarrito(producto, cantidad = 1) {
     items.push({
       id: producto.id,
       nombre: producto.nombre,
+      imagen: producto.imagen,
       categoria: producto.categoria,
       precio: producto.precio,
       precioMayoreo: producto.precioMayoreo,

@@ -1,21 +1,22 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { productos } from "../data/productos";
-import ImagenProducto from "../components/ImagenProducto";
-import Toast from "../components/Toast";
+import { leerProductos } from "../store/catalogo";
 import { agregarAlCarrito } from "../store/carrito";
+import ImagenProducto from "../components/ImagenProducto";
 import Resenas from "../components/Resenas";
+import Toast from "../components/Toast";
 
 const label = "font-mono text-xs uppercase tracking-widest text-trace";
 
 export default function DetalleProducto() {
   const { id } = useParams();
+  const productos = leerProductos();
   const producto = productos.find((p) => p.id === id);
 
   const [modo, setModo] = useState("menudeo");
   const [cantidad, setCantidad] = useState(1);
   const [toast, setToast] = useState(false);
-  
+
   if (!producto) {
     return (
       <section className="mx-auto max-w-6xl px-5 py-32 text-center">
@@ -54,6 +55,8 @@ export default function DetalleProducto() {
       <div className="mt-8 grid gap-12 lg:grid-cols-2">
         {/* Imagen */}
         <ImagenProducto
+          imagen={producto.imagen}
+          nombre={producto.nombre}
           categoria={producto.categoria}
           className="aspect-[10/7] rounded-sm"
         />
@@ -74,8 +77,8 @@ export default function DetalleProducto() {
               type="button"
               onClick={() => {
                 setModo("menudeo");
-                setCantidad(producto.minMayoreo);
-              }}S
+                setCantidad(1);
+              }}
               className={`rounded-sm border p-4 text-left transition-colors ${
                 !esMayoreo
                   ? "border-ink bg-ink text-board"
@@ -97,7 +100,10 @@ export default function DetalleProducto() {
 
             <button
               type="button"
-              onClick={() => setModo("mayoreo")}
+              onClick={() => {
+                setModo("mayoreo");
+                setCantidad(producto.minMayoreo);
+              }}
               className={`rounded-sm border p-4 text-left transition-colors ${
                 esMayoreo
                   ? "border-ink bg-ink text-board"
@@ -124,43 +130,45 @@ export default function DetalleProducto() {
             {producto.stock} en existencia
           </p>
 
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-1">
+          {/* Cantidad y carrito */}
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setCantidad(Math.max(1, cantidad - 1))}
+                className="h-11 w-11 rounded-sm border border-ink/20 font-mono hover:border-ink"
+                aria-label="Quitar una pieza"
+              >
+                −
+              </button>
+              <input
+                type="number"
+                min="1"
+                value={cantidad}
+                onChange={(e) =>
+                  setCantidad(Math.max(1, Number(e.target.value) || 1))
+                }
+                className="h-11 w-20 rounded-sm border border-ink/20 text-center font-mono text-sm outline-none focus:border-ink"
+                aria-label="Cantidad"
+              />
+              <button
+                onClick={() => setCantidad(cantidad + 1)}
+                className="h-11 w-11 rounded-sm border border-ink/20 font-mono hover:border-ink"
+                aria-label="Agregar una pieza"
+              >
+                +
+              </button>
+            </div>
+
             <button
-              onClick={() => setCantidad(Math.max(1, cantidad - 1))}
-              className="h-11 w-11 rounded-sm border border-ink/20 font-mono hover:border-ink"
-              aria-label="Quitar una pieza"
-        >
-         −
-        </button>
-        <input
-          type="number"
-          min="1"
-          value={cantidad}
-          onChange={(e) => setCantidad(Math.max(1, Number(e.target.value) || 1))}
-          className="h-11 w-20 rounded-sm border border-ink/20 text-center font-mono text-sm outline-none focus:border-ink"
-          aria-label="Cantidad"
-        />
-        <button
-          onClick={() => setCantidad(cantidad + 1)}
-          className="h-11 w-11 rounded-sm border border-ink/20 font-mono hover:border-ink"
-          aria-label="Agregar una pieza"
-        >
-          +
-        </button>
-      </div>
-
-      <button
-        onClick={() => {
-          agregarAlCarrito(producto, cantidad);
-          setToast(true);
-        }}
-        className="h-11 rounded-sm bg-ink px-6 font-mono text-xs uppercase tracking-wider text-board transition-colors hover:bg-ink-soft"
-      >
-        Agregar al carrito
-      </button>
-    </div>
-
+              onClick={() => {
+                agregarAlCarrito(producto, cantidad);
+                setToast(true);
+              }}
+              className="h-11 rounded-sm bg-ink px-6 font-mono text-xs uppercase tracking-wider text-board transition-colors hover:bg-ink-soft"
+            >
+              Agregar al carrito
+            </button>
+          </div>
         </div>
       </div>
 
@@ -193,7 +201,12 @@ export default function DetalleProducto() {
                 to={`/producto/${r.id}`}
                 className="overflow-hidden rounded-sm border border-ink/15 bg-white transition-colors hover:border-ink"
               >
-                <ImagenProducto categoria={r.categoria} className="aspect-[10/7]" />
+                <ImagenProducto
+                  imagen={r.imagen}
+                  nombre={r.nombre}
+                  categoria={r.categoria}
+                  className="aspect-[10/7]"
+                />
                 <div className="p-4">
                   <p className="font-display text-lg font-bold leading-tight">
                     {r.nombre}

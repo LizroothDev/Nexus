@@ -4,6 +4,7 @@ export const productos = [
   {
     id: "esp32-wroom",
     nombre: "ESP32-WROOM-32",
+    imagen: "/productos/esp32.jpg",
     etiqueta: "Oferta",
     categoria: "Embebidos",
     precio: 189,
@@ -25,6 +26,7 @@ export const productos = [
   {
     id: "rp2040-pico",
     nombre: "Raspberry Pi Pico",
+    imagen: "/productos/pico.jpg",
     etiqueta: "Nuevo",
     categoria: "Embebidos",
     precio: 145,
@@ -46,6 +48,7 @@ export const productos = [
   {
     id: "stm32-blackpill",
     nombre: "STM32F411 Black Pill",
+    imagen: "/productos/blackpill.jpg",
     categoria: "Embebidos",
     precio: 215,
     precioMayoreo: 168,
@@ -66,6 +69,7 @@ export const productos = [
   {
     id: "mpu6050",
     nombre: "MPU-6050 IMU",
+    imagen: "/productos/mpu6050.jpg",
     categoria: "Sensores",
     precio: 96,
     precioMayoreo: 71,
@@ -86,6 +90,7 @@ export const productos = [
   {
     id: "hcsr04",
     nombre: "HC-SR04 Ultrasónico",
+    imagen: "/productos/hcsr04.jpg",
     etiqueta: "Oferta",
     categoria: "Sensores",
     precio: 52,
@@ -107,6 +112,7 @@ export const productos = [
   {
     id: "vl53l0x",
     nombre: "VL53L0X ToF",
+    imagen: "/productos/vl53l0x.jpg",
     etiqueta: "Nuevo",
     categoria: "Sensores",
     precio: 178,
@@ -128,6 +134,7 @@ export const productos = [
   {
     id: "res-kit",
     nombre: "Kit de resistencias 1/4 W",
+    imagen: "/productos/resistencias.jpg",
     categoria: "Pasivos",
     precio: 45,
     precioMayoreo: 32,
@@ -148,6 +155,7 @@ export const productos = [
   {
     id: "cap-electro",
     nombre: "Capacitores electrolíticos",
+    imagen: "/productos/capacitores.jpg",
     categoria: "Pasivos",
     precio: 68,
     precioMayoreo: 49,
@@ -168,6 +176,7 @@ export const productos = [
   {
     id: "protoboard-830",
     nombre: "Protoboard 830 puntos",
+    imagen: "/productos/protoboard.jpg",
     categoria: "Pasivos",
     precio: 78,
     precioMayoreo: 58,
@@ -188,6 +197,7 @@ export const productos = [
   {
     id: "lora-sx1278",
     nombre: "SX1278 LoRa 433 MHz",
+    imagen: "/productos/lora.jpg",
     categoria: "Redes",
     precio: 245,
     precioMayoreo: 192,
@@ -208,6 +218,7 @@ export const productos = [
   {
     id: "w5500",
     nombre: "W5500 Ethernet",
+    imagen: "/productos/ethernet.jpg",
     categoria: "Redes",
     precio: 198,
     precioMayoreo: 156,
@@ -228,6 +239,7 @@ export const productos = [
   {
     id: "nrf24l01",
     nombre: "nRF24L01+ 2.4 GHz",
+    imagen: "/productos/nrf24.jpg",
     categoria: "Redes",
     precio: 74,
     precioMayoreo: 54,
