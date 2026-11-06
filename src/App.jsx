@@ -15,6 +15,7 @@ import Legal from "./pages/Legal";
 import Campana from "./pages/Campana";
 import Dashboard from "./pages/admin/Dashboard";
 import ProductosAdmin from "./pages/admin/Productos";
+import Publicar from "./pages/Publicar";
 
 export default function App() {
   return (
@@ -33,6 +34,9 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/legal" element={<Legal />} />
+
+        <Route path="/promociones" element={<Promociones />} />
+        <Route path="/publicar" element={<Publicar />} />
 
         <Route path="/admin" element={<LayoutAdmin />}>
           <Route index element={<Dashboard />} />

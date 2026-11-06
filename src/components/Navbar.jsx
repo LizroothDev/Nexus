@@ -8,6 +8,7 @@ const enlaces = [
   { to: "/", label: "Inicio" },
   { to: "/catalogo", label: "Catálogo" },
   { to: "/promociones", label: "Promos" },
+  { to: "/publicar", label: "Vender" },
   { to: "/nosotros", label: "Nosotros" },
   { to: "/contacto", label: "Contacto" },
 ];
