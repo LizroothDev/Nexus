@@ -17,6 +17,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import ProductosAdmin from "./pages/admin/Productos";
 import Publicar from "./pages/Publicar";
 import Subastas from "./pages/Subastas";
+import Comunidad from "./pages/Comunidad";
 
 export default function App() {
   return (
@@ -39,7 +40,7 @@ export default function App() {
         <Route path="/promociones" element={<Promociones />} />
         <Route path="/publicar" element={<Publicar />} />
         <Route path="/subastas" element={<Subastas />} />
-
+        <Route path="/comunidad" element={<Comunidad />} />
         <Route path="/admin" element={<LayoutAdmin />}>
           <Route index element={<Dashboard />} />
           <Route path="productos" element={<ProductosAdmin />} />
