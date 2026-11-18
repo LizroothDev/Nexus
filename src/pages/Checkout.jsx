@@ -5,6 +5,7 @@ import { leerCuponActivo, quitarCupon } from "../store/cupon";
 import { calcularDescuento } from "../data/cupones";
 import { leerSesion } from "../store/sesion";
 import { crearPedido } from "../store/pedidos";
+import { direccionPredeterminada, tarjetaPredeterminada, leerDirecciones } from "../store/agenda";
 
 const label = "font-mono text-xs uppercase tracking-widest text-trace";
 const input =
@@ -64,6 +65,8 @@ export default function Checkout() {
   const [metodo, setMetodo] = useState("tarjeta");
   const [pago, setPago] = useState(pagoVacio);
   const [factura, setFactura] = useState(false);
+  const [guardadas, setGuardadas] = useState([]);
+  const [tarjetaGuardada, setTarjetaGuardada] = useState(null);
 
   useEffect(() => {
     const carrito = leerCarrito();
@@ -79,6 +82,22 @@ export default function Checkout() {
         razonSocial: sesion.empresa || "",
       }));
       if (sesion.tipo === "empresa") setFactura(true);
+    }
+    const dirs = leerDirecciones();
+    setGuardadas(dirs);
+    setTarjetaGuardada(tarjetaPredeterminada());
+
+    const favorita = direccionPredeterminada();
+    if (favorita) {
+      setEnvio((e) => ({
+            ...e,
+            nombre: favorita.nombre,
+            calle: favorita.calle,
+            colonia: favorita.colonia,
+            ciudad: favorita.ciudad,
+            cp: favorita.cp,
+            telefono: favorita.telefono,
+        }));
     }
   }, []);
 
@@ -190,6 +209,34 @@ export default function Checkout() {
               <h2 className="font-display text-2xl font-extrabold">
                 Dirección de envío
               </h2>
+
+              {guardadas.length > 0 && (
+                <div className="mt-5">
+                    <p className={label}>Usar una guardada</p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                    {guardadas.map((d) => (
+                        <button
+                        key={d.id}
+                        type="button"
+                        onClick={() =>
+                            setEnvio({
+                            ...envio,
+                            nombre: d.nombre,
+                            calle: d.calle,
+                            colonia: d.colonia,
+                            ciudad: d.ciudad,
+                            cp: d.cp,
+                            telefono: d.telefono,
+                            })
+                        }
+                        className="rounded-sm border border-ink/20 px-3 py-1.5 font-mono text-xs transition-colors hover:border-ink"
+                        >
+                        {d.alias}
+                        </button>
+                    ))}
+                    </div>
+                </div>
+                )}
 
               <div className="mt-6 grid gap-4">
                 <div>
@@ -307,6 +354,23 @@ export default function Checkout() {
                   <p className="font-mono text-xs uppercase tracking-widest text-trace">
                     Datos de la tarjeta
                   </p>
+                {tarjetaGuardada && (
+                    <button
+                        type="button"
+                        onClick={() =>
+                        setPago({
+                            ...pago,
+                            titular: tarjetaGuardada.titular,
+                            tarjeta: `•••• •••• •••• ${tarjetaGuardada.ultimos4}`,
+                            vence: tarjetaGuardada.vence,
+                        })
+                        }
+                        className="rounded-sm border border-band-green bg-band-green/5 px-4 py-3 text-left font-mono text-xs"
+                    >
+                        Usar {tarjetaGuardada.marca} •••• {tarjetaGuardada.ultimos4}
+                    </button>
+                    )}
+
                   <div>
                     <label htmlFor="titular" className={label}>Nombre del titular</label>
                     <input id="titular" name="titular" value={pago.titular} onChange={cambiarPago} placeholder="ANA MARTINEZ" className={`${input} uppercase`} />

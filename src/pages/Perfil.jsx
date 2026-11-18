@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { leerSesion, cerrarSesion } from "../store/sesion";
 import { leerPedidos } from "../store/pedidos";
+import Agenda from "../components/Agenda";
 
 const label = "font-mono text-xs uppercase tracking-widest text-trace";
 const pesos = (n) =>
@@ -102,6 +103,8 @@ export default function Perfil() {
           </p>
         </div>
       </div>
+
+      <Agenda />
 
       {/* Mis compras */}
       <div className="mt-12">
