@@ -34,3 +34,22 @@ export function borrarHistorial() {
   localStorage.removeItem(CLAVE);
   return [];
 }
+
+export const etapas = [
+  { id: "confirmado", nombre: "Pedido confirmado", detalle: "Recibimos tu pago" },
+  { id: "preparando", nombre: "En preparación", detalle: "Surtiendo en almacén" },
+  { id: "paqueteria", nombre: "Entregado a paquetería", detalle: "Salió de Aguascalientes" },
+  { id: "transito", nombre: "En camino", detalle: "En ruta a tu dirección" },
+  { id: "entregado", nombre: "Entregado", detalle: "Paquete recibido" },
+];
+
+// El pedido avanza una etapa cada 20 segundos desde que se creó
+export function etapaActual(pedido) {
+  const transcurrido = Date.now() - new Date(pedido.fecha).getTime();
+  const avance = Math.floor(transcurrido / 20000);
+  return Math.min(avance, etapas.length - 1);
+}
+
+export function estadoTexto(pedido) {
+  return etapas[etapaActual(pedido)].nombre;
+}

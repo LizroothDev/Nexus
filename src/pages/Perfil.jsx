@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { leerSesion, cerrarSesion } from "../store/sesion";
 import { leerPedidos } from "../store/pedidos";
 import Agenda from "../components/Agenda";
+import Rastreo from "../components/Rastreo";
 
 const label = "font-mono text-xs uppercase tracking-widest text-trace";
 const pesos = (n) =>
@@ -139,9 +140,7 @@ export default function Perfil() {
                       · {p.items.length} {p.items.length === 1 ? "clave" : "claves"}
                     </p>
                   </div>
-                  <span className="rounded-sm bg-band-green/10 px-2 py-1 font-mono text-xs text-band-green">
-                    {p.estado}
-                  </span>
+                  <Rastreo pedido={p} compacto />
                 </div>
 
                 <ul className="mt-4 divide-y divide-ink/10 border-y border-ink/10">

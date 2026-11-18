@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { buscarPedido } from "../store/pedidos";
+import Rastreo from "../components/Rastreo";
 
 const label = "font-mono text-xs uppercase tracking-widest text-trace";
 const pesos = (n) =>
@@ -67,6 +68,11 @@ export default function Confirmacion() {
             {entrega.toLocaleDateString("es-MX", { day: "numeric", month: "long" })}
           </p>
         </div>
+      </div>
+
+      {/* Rastreo del paquete */}
+      <div className="mt-6">
+        <Rastreo pedido={pedido} />
       </div>
 
       {/* Detalle */}
