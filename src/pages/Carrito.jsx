@@ -242,15 +242,13 @@ export default function Carrito() {
             </span>
           </label>
 
-          <button
-            onClick={() => setToast(true)}
-            className="mt-5 w-full rounded-sm bg-ink px-6 py-3.5 font-mono text-xs uppercase tracking-wider text-board hover:bg-ink-soft"
+          <Link
+            to="/checkout"
+            className="mt-5 block w-full rounded-sm bg-ink px-6 py-3.5 text-center font-mono text-xs uppercase tracking-wider text-board hover:bg-ink-soft"
           >
             Ir a checkout
-          </button>
-          <p className="mt-3 text-center font-mono text-xs text-trace">
-            Checkout disponible en Bloque 4
-          </p>
+          </Link>
+
         </aside>
       </div>
 

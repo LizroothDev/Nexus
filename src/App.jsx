@@ -18,6 +18,7 @@ import ProductosAdmin from "./pages/admin/Productos";
 import Publicar from "./pages/Publicar";
 import Subastas from "./pages/Subastas";
 import Comunidad from "./pages/Comunidad";
+import Checkout from "./pages/Checkout";
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/legal" element={<Legal />} />
+        <Route path="/checkout" element={<Checkout />} />
 
         <Route path="/promociones" element={<Promociones />} />
         <Route path="/publicar" element={<Publicar />} />
