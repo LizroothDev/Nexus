@@ -2,7 +2,9 @@ import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { categorias } from "../data/productos";
 import { leerProductos } from "../store/catalogo";
+import { agregarAlCarrito } from "../store/carrito";
 import ImagenProducto from "../components/ImagenProducto";
+import Toast from "../components/Toast";
 
 const label = "font-mono text-xs uppercase tracking-widest text-trace";
 const TOPE = 300;
@@ -17,6 +19,7 @@ export default function Catalogo() {
   const [busqueda, setBusqueda] = useState("");
   const [categoria, setCategoria] = useState("Todas");
   const [precioMax, setPrecioMax] = useState(TOPE);
+  const [toast, setToast] = useState("");
 
   useEffect(() => {
     const actualizar = () => setProductos(leerProductos());
@@ -133,13 +136,14 @@ export default function Catalogo() {
               key={p.id}
               className="flex flex-col overflow-hidden rounded-sm border border-ink/15 bg-white"
             >
-              <div className="relative">
+              <div className="group relative">
                 <ImagenProducto
                   imagen={p.imagen}
                   nombre={p.nombre}
                   categoria={p.categoria}
                   className="aspect-[10/7]"
                 />
+
                 {p.etiqueta && (
                   <span
                     className={`absolute left-3 top-3 rounded-sm px-2 py-1 font-mono text-xs uppercase tracking-wider ${colorEtiqueta[p.etiqueta]}`}
@@ -147,6 +151,17 @@ export default function Catalogo() {
                     {p.etiqueta}
                   </span>
                 )}
+
+                <button
+                  onClick={() => {
+                    agregarAlCarrito(p, 1);
+                    setToast(`${p.nombre} agregado al carrito`);
+                  }}
+                  aria-label={`Agregar ${p.nombre} al carrito`}
+                  className="absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-sm bg-ink font-display text-xl text-board opacity-0 shadow-lg transition-opacity hover:bg-ink-soft focus-visible:opacity-100 group-hover:opacity-100 max-sm:opacity-100"
+                >
+                  +
+                </button>
               </div>
 
               <div className="flex flex-1 flex-col p-5">
@@ -182,6 +197,8 @@ export default function Catalogo() {
           ))}
         </div>
       )}
+
+      <Toast mensaje={toast} visible={!!toast} onCerrar={() => setToast("")} />
     </section>
   );
 }
