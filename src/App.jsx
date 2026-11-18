@@ -19,6 +19,8 @@ import Publicar from "./pages/Publicar";
 import Subastas from "./pages/Subastas";
 import Comunidad from "./pages/Comunidad";
 import Checkout from "./pages/Checkout";
+import Confirmacion from "./pages/Confirmacion";
+import Factura from "./pages/Factura";
 
 export default function App() {
   return (
@@ -38,6 +40,8 @@ export default function App() {
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/legal" element={<Legal />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/confirmacion/:folio" element={<Confirmacion />} />
+        <Route path="/factura/:folio" element={<Factura />} />
 
         <Route path="/promociones" element={<Promociones />} />
         <Route path="/publicar" element={<Publicar />} />
